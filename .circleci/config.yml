@@ -31,21 +31,31 @@ jobs:
           echo "Digest is: $(</tmp/digest.txt)"
 
   create-update-deployment:
-  machine: true
-  steps:
-    - checkout
-    - gke/update-kubeconfig-with-credentials:
-        cluster: prog-delivery
-        install-kubectl: true
-        perform-login: true
-    - kubernetes/create-or-update-resource:
-        get-rollout-status: true
-        resource-file-path: k8sconfig/app.yaml
-        resource-name: deployment/api
-        show-kubectl-command: true
+    machine: true
+    steps:
+      - checkout
+      - gke/update-kubeconfig-with-credentials:
+          cluster: prog-delivery
+          install-kubectl: true
+          perform-login: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: k8sconfig/app.yaml
+          resource-name: deployment/api
+          show-kubectl-command: true
 
 workflows:
-  pull-images:
+  build-and-deploy:
     jobs:
       - test
-      - build-docker
+      - build-docker:
+          requires:
+            - build
+      - create-update-deployment:
+          requires:
+            - unit-test
+            - functional-test
+          filters:
+            branches:
+              only:
+                - main
