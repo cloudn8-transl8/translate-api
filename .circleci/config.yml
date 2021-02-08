@@ -33,8 +33,7 @@ jobs:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
       - discord/status:
-          success_message: |
-            Successfully built and pushed new image nicholasjackson/translate-api:${tag}
+          success_message: "Successfully built and pushed new image nicholasjackson/translate-api:${tag}"
 
   create-update-deployment:
     machine: true

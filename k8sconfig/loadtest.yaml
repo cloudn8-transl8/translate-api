@@ -25,6 +25,7 @@ data:
         'status is 200': (r) => r.status === 200,
       });
     }
+
 ---
 # Load test
 apiVersion: apps/v1
