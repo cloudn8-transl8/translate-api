@@ -2,11 +2,11 @@
 apiVersion: consul.hashicorp.com/v1alpha1
 kind: IngressGateway
 metadata:
-  name: ingress
+  name: ingress-gateway
 spec:
   listeners:
     - port: 80
       protocol: http
       services:
         - name: api
-        - hosts: ['api.translate.demo.gs']
+          hosts: ['api.translate.demo.gs']
