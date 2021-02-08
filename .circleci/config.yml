@@ -50,11 +50,10 @@ workflows:
       - test
       - build-docker:
           requires:
-            - build
+            - test
       - create-update-deployment:
           requires:
-            - unit-test
-            - functional-test
+            - build-docker
           filters:
             branches:
               only:
