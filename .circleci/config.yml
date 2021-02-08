@@ -27,8 +27,8 @@ jobs:
           digest-path: /tmp/digest.txt
           image: my_repo/orb-test
       - run:
-        command: |
-          echo "Digest is: $(</tmp/digest.txt)"
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
 
   create-update-deployment:
     machine: true
