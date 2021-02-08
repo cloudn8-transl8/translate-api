@@ -38,6 +38,6 @@ spec:
     spec:
       containers:
       - name: api
-        image: nicholasjackson/translate-api:main
+        image: nicholasjackson/translate-api:0.0.1
         ports:
         - containerPort: 3000
