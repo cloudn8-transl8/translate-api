@@ -1,7 +1,51 @@
+---
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
+  gke: circleci/gcp-gke@1.1.0
+  kubernetes: circleci/kubernetes@0.11.2
+  docker: circleci/docker@1.5.0
+
+jobs:
+  test:
+    machine: true
+    steps:
+      - checkout
+      - run:
+         name: test app
+         command: npm install
+
+  build-docker:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: nicholasjackson/translate-api
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: my_repo/orb-test
+      - run:
+        command: |
+          echo "Digest is: $(</tmp/digest.txt)"
+
+  create-update-deployment:
+  machine: true
+  steps:
+    - checkout
+    - gke/update-kubeconfig-with-credentials:
+        cluster: prog-delivery
+        install-kubectl: true
+        perform-login: true
+    - kubernetes/create-or-update-resource:
+        get-rollout-status: true
+        resource-file-path: k8sconfig/app.yaml
+        resource-name: deployment/api
+        show-kubectl-command: true
+
 workflows:
-  node-tests:
+  pull-images:
     jobs:
-      - node/test
+      - test
+      - build-docker
