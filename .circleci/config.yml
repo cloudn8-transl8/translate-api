@@ -24,9 +24,11 @@ jobs:
       - docker/check
       - docker/build:
           image: nicholasjackson/translate-api
+          tag: main
       - docker/push:
           digest-path: /tmp/digest.txt
           image: nicholasjackson/translate-api
+          tag: main
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
