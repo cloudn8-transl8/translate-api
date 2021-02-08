@@ -5,6 +5,7 @@ orbs:
   gke: circleci/gcp-gke@1.1.0
   kubernetes: circleci/kubernetes@0.11.2
   docker: circleci/docker@1.5.0
+  discord: antonioned/discord@0.1.0
 
 jobs:
   test:
@@ -29,6 +30,9 @@ jobs:
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
+      - discord/status:
+          success_message: |
+            Successfully built and pushed new image nicholasjackson/translate-api:${tag}
 
   create-update-deployment:
     machine: true
@@ -41,6 +45,9 @@ jobs:
       - kubernetes/create-or-update-resource:
           resource-file-path: k8sconfig/
           show-kubectl-command: true
+      - discord/status:
+          success_message: |
+            Successfully deployed application to Kubernetes
 
 workflows:
   build-and-deploy:
