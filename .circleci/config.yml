@@ -48,8 +48,7 @@ jobs:
           resource-file-path: k8sconfig/
           show-kubectl-command: true
       - discord/status:
-          success_message: |
-            Successfully deployed application to Kubernetes
+          success_message: "**${CIRCLE_USERNAME}** deployed api to prod, I would double check this as he has been known to engineer bugs"
 
 workflows:
   build-and-deploy:
