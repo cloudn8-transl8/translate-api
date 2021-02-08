@@ -25,7 +25,7 @@ jobs:
           image: nicholasjackson/translate-api
       - docker/push:
           digest-path: /tmp/digest.txt
-          image: my_repo/orb-test
+          image: nicholasjackson/translate-api
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
@@ -39,9 +39,7 @@ jobs:
           install-kubectl: true
           perform-login: true
       - kubernetes/create-or-update-resource:
-          get-rollout-status: true
-          resource-file-path: k8sconfig/app.yaml
-          resource-name: deployment/api
+          resource-file-path: k8sconfig/
           show-kubectl-command: true
 
 workflows:
