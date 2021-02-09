@@ -2,6 +2,12 @@ const express = require('express')
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const emoji = require('node-emoji')
+const cors = require('cors')
+
+const corsOptions = {
+  origin: process.env.ORIGIN || 'http://localhost',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
 const projectId = process.env.GOOGLE_PROJECT
 
@@ -44,7 +50,7 @@ const app = express()
 app.use(bodyParser.text())
 
 // respond with "hello world" when a GET request is made to the homepage
-app.post('/translate/:lang', function (req, res) {
+app.post('/translate/:lang', cors(corsOptions), function (req, res) {
   // The text to translate
   const text = req.body
 

@@ -44,6 +44,8 @@ spec:
         env:
         - name: GOOGLE_PROJECT
           value: consul-canary
+        - name: ORIGIN
+          value: translate.demo.gs
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /etc/secret/credentials.json
         volumeMounts:
