@@ -45,16 +45,7 @@ jobs:
           perform-login: true
       - run:
           name: "Generate kustomization config"
-          command: |
-            echo <<EOF > ./k8sconfig/kustomization.yaml
-            ---
-            resources:
-            - app.yaml
-
-            images:
-            - name: nicholasjackson/translate-api
-              newTag: ${CIRCLE_REF}
-            EOF
+          command: ./scripts/prepare_kustomize.sh
       - kubernetes/create-or-update-resource:
           resource-file-path: k8sconfig/
           show-kubectl-command: true
