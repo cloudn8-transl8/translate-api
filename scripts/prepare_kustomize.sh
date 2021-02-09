@@ -2,7 +2,7 @@
 
 #!/bin/bash -e
 
-echo <<EOF > ../k8sconfig/kustomization.yaml
+echo <<EOF > ./k8sconfig/kustomization.yaml
 ---
 resources:
 - app.yaml
