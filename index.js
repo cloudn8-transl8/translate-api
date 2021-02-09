@@ -1,6 +1,7 @@
 const express = require('express')
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
+const emoji = require('node-emoji')
 
 const app = express()
 app.use(bodyParser.text())
@@ -23,11 +24,21 @@ app.post('/translate', function (req, res) {
 
   console.log(`handle translate request lang: ${target} text: ${text}`)
 
-  // Translates some text into Russian
-  const translation = translate.translate(text, target)
+  // first translate into english
+  const translation = translate.translate(text, 'en')
   translation.then((d) => {
     console.log(`Translation: ${d[0]}`)
-    res.send(d[0])
+    const emojiText = addEmojiToText(text)
+
+    // now translate into russian
+    const translation = translate.translate(emojiText, target)
+    translation.then((d) => {
+      console.log(`Translation: ${d[0]}`)
+      res.send(d[0])
+    }).catch((e) => {
+      console.log(`Error: ${e}`)
+      res.status(e, 500)
+    })
   }).catch((e) => {
     console.log(`Error: ${e}`)
     res.status(e, 500)
@@ -35,11 +46,27 @@ app.post('/translate', function (req, res) {
 })
 
 app.get('/health', function (req, res) {
-  console.log('handle health request')
+  console.log('handle health request', emoji.get('heart'))
 
-  res.send('ok')
+  res.send(emoji.get('heart'))
 })
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+
+const addEmojiToText = function (text) {
+  const words = text.split(' ')
+  const returnString = []
+
+  words.forEach((w) => {
+    const e = emoji.find(w.toLowerCase())
+    if (e === undefined || e === null) {
+      returnString.push(w)
+    } else {
+      returnString.push(e.emoji)
+    }
+  })
+
+  return emoji.emojify(returnString.join(' '))
+}
