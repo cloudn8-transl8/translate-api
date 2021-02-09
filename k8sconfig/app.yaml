@@ -41,3 +41,16 @@ spec:
         image: nicholasjackson/translate-api:0.0.1
         ports:
         - containerPort: 3000
+        env:
+        - name: GOOGLE_PROJECT
+          value: consul-canary
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /etc/secret/credentials.json
+        volumeMounts:
+        - name: foo
+          mountPath: "/etc/secret"
+          readOnly: true
+      volumes:
+        - name: gcloud
+          secret:
+            secretName: google-application-credentials
