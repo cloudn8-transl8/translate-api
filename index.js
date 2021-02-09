@@ -2,10 +2,8 @@ const express = require('express')
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const emoji = require('node-emoji')
-const cors = require('cors')
 
 const app = express()
-app.use(cors())
 app.use(bodyParser.text())
 
 const projectId = process.env.GOOGLE_PROJECT
