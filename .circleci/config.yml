@@ -56,11 +56,17 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - test
+      - test:
+          context:
+          - transl8
       - build-docker:
+          context:
+          - transl8
           requires:
             - test
       - create-update-deployment:
+          context:
+          - transl8
           requires:
             - build-docker
           filters:
