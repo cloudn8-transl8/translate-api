@@ -24,11 +24,11 @@ jobs:
       - docker/check
       - docker/build:
           image: nicholasjackson/translate-api
-          tag: ${CIRCLE_REF}
+          tag: ${$CIRCLE_SHA1}
       - docker/push:
           digest-path: /tmp/digest.txt
           image: nicholasjackson/translate-api
-          tag: ${CIRCLE_REF}
+          tag: ${$CIRCLE_SHA1}
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"

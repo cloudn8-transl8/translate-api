@@ -7,5 +7,5 @@ resources:
 
 images:
 - name: nicholasjackson/translate-api
-  newTag: ${CIRCLE_REF}
+  newTag: ${CIRCLE_SHA1}
 EOF
