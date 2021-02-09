@@ -47,7 +47,7 @@ spec:
         - name: GOOGLE_APPLICATION_CREDENTIALS
           value: /etc/secret/credentials.json
         volumeMounts:
-        - name: foo
+        - name: gcloud
           mountPath: "/etc/secret"
           readOnly: true
       volumes:
