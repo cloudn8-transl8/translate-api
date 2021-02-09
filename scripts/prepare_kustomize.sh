@@ -1,8 +1,6 @@
-
-
 #!/bin/bash -e
 
-echo <<EOF > ./k8sconfig/kustomization.yaml
+cat <<EOF > ./k8sconfig/kustomization.yaml
 ---
 resources:
 - app.yaml
