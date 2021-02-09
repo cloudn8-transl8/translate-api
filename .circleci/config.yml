@@ -43,9 +43,21 @@ jobs:
           cluster: prog-delivery
           install-kubectl: true
           perform-login: true
+      - generate-kustomize-config:
+          command: |
+            echo <<EOF > ./k8sconfig/kustomization.yaml
+            ---
+            resources:
+            - app.yaml
+
+            images:
+            - name: nicholasjackson/translate-api
+              newTag: ${CIRCLE_REF}
+            EOF
       - kubernetes/create-or-update-resource:
           resource-file-path: k8sconfig/
           show-kubectl-command: true
+          kustomize: true
       - discord/status:
           success_message: "**${CIRCLE_USERNAME}** deployed api to prod, I would double check this as he has been known to engineer bugs"
 
