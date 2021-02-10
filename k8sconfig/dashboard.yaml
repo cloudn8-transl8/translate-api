@@ -51,6 +51,8 @@ data:
           "legend": {
             "avg": false,
             "current": false,
+            "hideEmpty": true,
+            "hideZero": true,
             "max": false,
             "min": false,
             "show": true,
@@ -164,7 +166,7 @@ data:
           "pluginVersion": "7.3.5",
           "targets": [
             {
-              "expr": "sum(rate(envoy_cluster_upstream_rq_retry{consul_source_service=\"web\"}[30s]))",
+              "expr": "sum(rate(envoy_cluster_upstream_rq_retry{consul_destination_service=\"api\"}[30s]))",
               "interval": "",
               "legendFormat": "",
               "refId": "A"
@@ -201,6 +203,8 @@ data:
             "alignAsTable": true,
             "avg": true,
             "current": true,
+            "hideEmpty": true,
+            "hideZero": true,
             "max": true,
             "min": true,
             "show": true,
@@ -220,10 +224,12 @@ data:
           "renderer": "flot",
           "seriesOverrides": [
             {
+              "$$hashKey": "object:343",
               "alias": "Primary - 200",
               "color": "#73BF69"
             },
             {
+              "$$hashKey": "object:344",
               "alias": "Canary - 200",
               "color": "#FADE2A"
             }
