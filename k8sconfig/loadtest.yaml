@@ -9,17 +9,29 @@ data:
     import http from 'k6/http';
     import { sleep, check } from 'k6';
     import { Counter } from 'k6/metrics';
+
     // A simple counter for http requests
     export const requests = new Counter('http_reqs');
+
     // you can specify stages of your test (ramp up/down patterns) through the options object
     // target is the number of VUs you are aiming for
     export const options = {
       vus: 10,
       duration: '30m',
     };
+
     export default function () {
+      var payload = 'Replicants are like any other machine, are either a benefit or a hazard'
+
+      var params = {
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+      }
+
       // our HTTP request, note that we are saving the response to res, which can be accessed later
-      const res = http.get('http://api.translate.demo.gs/health');
+      const res = http.post('http://api.translate.demo.gs/translate/ru', payload, params);
+
       sleep(1);
       const checkRes = check(res, {
         'status is 200': (r) => r.status === 200,

@@ -24,7 +24,6 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
-      "id": 1,
       "links": [],
       "panels": [
         {
@@ -75,7 +74,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "rate(envoy_http_downstream_rq_xx{pod=~\"web.*\", local_cluster=\"web\", envoy_http_conn_manager_prefix=\"upstream\", envoy_response_code_class=~\"2|5\"}[30s])",
+              "expr": "sum by (envoy_response_code_class) (rate(envoy_http_downstream_rq_xx{consul_source_service=\"nginx\", consul_upstream_service=\"api\"}[30s]))",
               "interval": "",
               "legendFormat": "Response Code {{envoy_response_code_class}}xx",
               "refId": "A"
@@ -85,7 +84,7 @@ data:
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "Web Requests",
+          "title": "Downstream Response",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -472,5 +471,5 @@ data:
       "timezone": "",
       "title": "Canary",
       "uid": "irtYjefGk",
-      "version": 21
+      "version": 39
     }
