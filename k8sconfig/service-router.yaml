@@ -15,7 +15,7 @@ spec:
   routes:
   - destination:
       service: "api"
-      numRetries: 5
+      numRetries: 20
       retryOnStatusCodes: [500, 501, 502, 503, 504]
       retryOnConnectFailure: true
 
