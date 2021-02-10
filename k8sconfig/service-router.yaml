@@ -15,8 +15,8 @@ spec:
   routes:
   - destination:
       service: "api"
-      numRetries: 6
-      retryOnStatusCodes: [500, 503]
+      numRetries: 10
+      retryOnStatusCodes: [500, 501, 502, 503, 504]
 
 ---
 apiVersion: consul.hashicorp.com/v1alpha1

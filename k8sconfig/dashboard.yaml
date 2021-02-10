@@ -50,14 +50,14 @@ data:
           "id": 2,
           "legend": {
             "avg": false,
-            "current": false,
+            "current": true,
             "hideEmpty": true,
             "hideZero": true,
             "max": false,
             "min": false,
             "show": true,
-            "total": false,
-            "values": false
+            "total": true,
+            "values": true
           },
           "lines": true,
           "linewidth": 1,
@@ -76,7 +76,8 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (envoy_response_code_class) (rate(envoy_http_downstream_rq_xx{consul_source_service=\"nginx\", consul_upstream_service=\"api\"}[30s]))",
+              "expr": "sum by (envoy_response_code_class) (rate(envoy_http_downstream_rq_xx{local_cluster=\"nginx\", envoy_http_conn_manager_prefix=\"upstream\"}[30s]))",
+              "hide": false,
               "interval": "",
               "legendFormat": "Response Code {{envoy_response_code_class}}xx",
               "refId": "A"
@@ -155,7 +156,7 @@ data:
           "options": {
             "reduceOptions": {
               "calcs": [
-                "mean"
+                "lastNotNull"
               ],
               "fields": "",
               "values": false
