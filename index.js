@@ -51,8 +51,6 @@ app.use(bodyParser.text())
 
 // respond with "hello world" when a GET request is made to the homepage
 app.post('/translate/:lang', cors(corsOptions), function (req, res) {
-  res.status(500).send(e)
-
   // The text to translate
   const text = req.body
 
