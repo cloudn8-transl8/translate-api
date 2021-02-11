@@ -41,3 +41,8 @@ spec:
       thresholdRange:
         min: 99
       interval: 1m
+    alerts:
+      - name: "Discord"
+        severity: info
+        providerRef:
+          name: on-call
