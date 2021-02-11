@@ -13,8 +13,11 @@ jobs:
     steps:
       - checkout
       - run:
-         name: test app
+         name: install dependencies
          command: npm install
+      - run:
+         name: run tests
+         command: npm test
 
   build-docker:
     executor: docker/docker

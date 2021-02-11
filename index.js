@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const emoji = require('node-emoji')
 const cors = require('cors')
 
+const healthHandler = require('handles/health')
+
 const corsOptions = {
   origin: process.env.ORIGIN || 'http://localhost',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -94,11 +96,7 @@ app.post('/translate/:lang', cors(corsOptions), function (req, res) {
   })
 })
 
-app.get('/health', function (req, res) {
-  console.log('handle health request', emoji.get('heart'))
-
-  res.send(emoji.get('heart'))
-})
+app.get('/health', healthHandler)
 
 app.get('/languages', cors(corsOptions), function (req, res) {
   console.log('handle languages')
