@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/jest"
+    "test": "node_modules/.bin/jest",
+    "test-ci": "node_modules/.bin/jest --ci"
   },
   "jest": {
     "verbose": true
