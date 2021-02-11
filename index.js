@@ -100,7 +100,7 @@ app.get('/health', function (req, res) {
   res.send(emoji.get('heart'))
 })
 
-app.get('/languages', function (req, res) {
+app.get('/languages', cors(corsOptions), function (req, res) {
   console.log('handle languages')
 
   res.send(langs)
