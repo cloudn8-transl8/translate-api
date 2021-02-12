@@ -42,6 +42,12 @@ app.get('/languages', cors(corsOptions), function (req, res) {
   res.send(langs)
 })
 
+// error handling function
+app.use(function(error, req, res, next) {
+  // Will get here
+  res.json({ message: error.message })
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })

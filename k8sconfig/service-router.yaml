@@ -8,19 +8,6 @@ spec:
 
 ---
 apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceRouter
-metadata:
-  name: api
-spec:
-  routes:
-  - destination:
-      service: api
-      numRetries: 20
-      retryOnStatusCodes: [500, 501, 502, 503, 504]
-      retryOnConnectFailure: true
-
----
-apiVersion: consul.hashicorp.com/v1alpha1
 kind: ServiceResolver
 metadata:
   name: api
