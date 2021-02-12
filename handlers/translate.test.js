@@ -7,11 +7,11 @@ const {
 
 const healthHandler = require('./translate')
 
-test('handler returns a 402 when given an invalid language', () => {
+test('handler returns a 402 when given an invalid language', async () => {
   const req = mockRequest(null, null, { lang: 'ru' })
   const res = mockResponse()
 
-  healthHandler(mockLangs)(req, res)
+  await runHandler(mockLangs, null, req, res)
 
   expect(res.status).toHaveBeenCalledWith(402)
 })
@@ -27,7 +27,7 @@ test('handler first translates to english, returns 500 on fail', async () => {
     Promise.resolve([])
   )
 
-  await healthHandler(mockLangs, client)(req, res)
+  await runHandler(mockLangs, client, req, res)
 
   expect(client.translate).toHaveBeenCalledTimes(1)
   expect(client.translate).toHaveBeenCalledWith(body, 'en')
@@ -50,12 +50,16 @@ test('handler calls translate with emoji text, returns 500 on fail', async () =>
       Promise.resolve(null)
     )
 
-  await healthHandler(mockLangs, client)(req, res)
+  await runHandler(mockLangs, client, req, res)
 
   expect(client.translate).toHaveBeenCalledTimes(2)
   expect(client.translate).toHaveBeenCalledWith(bodyWithEmoji, 'tt')
   expect(res.status).toHaveBeenCalledWith(500)
 })
+
+async function runHandler(mockLangs, client, req, res) {
+  await healthHandler(mockLangs, client)(req, res)
+}
 
 test('handler calls translate with emoji text, returns translation on success', async () => {
   const body = 'I love coffee'
@@ -74,7 +78,7 @@ test('handler calls translate with emoji text, returns translation on success', 
       Promise.resolve([bodyResponse])
     )
 
-  await healthHandler(mockLangs, client)(req, res)
+  await runHandler(mockLangs, client, req, res)
 
   expect(client.translate).toHaveBeenCalledTimes(2)
   expect(client.translate).toHaveBeenCalledWith(bodyWithEmoji, 'tt')
