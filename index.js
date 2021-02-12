@@ -26,26 +26,22 @@ async function fetchLanguages () {
   return languages
 }
 
-async function setup () {
-  // fetch the languages
-  const langs = await fetchLanguages()
+// fetch the languages
+const langs = fetchLanguages()
 
-  const app = express()
-  app.use(bodyParser.text())
+const app = express()
+app.use(bodyParser.text())
 
-  app.post('/translate/:lang', cors(corsOptions), translateHandler(langs, translate))
+app.post('/translate/:lang', cors(corsOptions), translateHandler(langs, translate))
 
-  app.get('/health', healthHandler)
+app.get('/health', healthHandler)
 
-  app.get('/languages', cors(corsOptions), function (req, res) {
-    console.log('handle languages')
+app.get('/languages', cors(corsOptions), function (req, res) {
+  console.log('handle languages')
 
-    res.send(langs)
-  })
+  res.send(langs)
+})
 
-  app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-  })
-}
-
-setup()
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
