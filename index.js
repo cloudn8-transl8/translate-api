@@ -45,7 +45,7 @@ app.get('/languages', cors(corsOptions), function (req, res) {
 // error handling function
 app.use(function(error, req, res, next) {
   // Will get here
-  res.json({ message: error.message })
+  res.status(500).json({ message: error.message })
 })
 
 app.listen(port, () => {
