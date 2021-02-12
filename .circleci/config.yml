@@ -11,7 +11,7 @@ jobs:
   test:
     machine: true
     steps:
-      - node/install:
+      - node/install
       - checkout
       - run:
          name: install dependencies
