@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node_modules/.bin/jest",
-    "test-ci": "node_modules/.bin/jest --ci"
+    "test-ci": "node_modules/.bin/jest --ci",
+    "test-watch": "node_modules/.bin/jest --watch"
   },
   "jest": {
     "verbose": true
