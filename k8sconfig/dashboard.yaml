@@ -76,7 +76,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (envoy_response_code_class) (rate(envoy_http_downstream_rq_xx{consul_upstream_service=\"api\"}[30s]))",
+              "expr": "sum by (envoy_response_code_class) (rate(envoy_vhost_vcluster_upstream_rq_xx{envoy_virtual_host=\"backend\"}[30s]))",
               "hide": false,
               "interval": "",
               "legendFormat": "Response Code {{envoy_response_code_class}}xx",
@@ -139,7 +139,7 @@ data:
                   },
                   {
                     "color": "red",
-                    "value": 1
+                    "value": 0
                   }
                 ]
               }
@@ -167,7 +167,7 @@ data:
           "pluginVersion": "7.3.5",
           "targets": [
             {
-              "expr": "sum(rate(envoy_cluster_upstream_rq_retry{consul_destination_service=\"api\"}[30s]))",
+              "expr": "sum(rate(envoy_vhost_vcluster_upstream_rq_retry{envoy_virtual_host=\"backend\"}[30s]))",
               "interval": "",
               "legendFormat": "",
               "refId": "A"
@@ -478,5 +478,5 @@ data:
       "timezone": "",
       "title": "API",
       "uid": "irtYjefGk",
-      "version": 40
+      "version": 42
     }
