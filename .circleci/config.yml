@@ -1,7 +1,7 @@
 ---
 version: 2.1
 orbs:
-  node: circleci/node@3.0.0
+  node: circleci/node@4.1.0
   gke: circleci/gcp-gke@1.1.0
   kubernetes: circleci/kubernetes@0.11.2
   docker: circleci/docker@1.5.0
@@ -9,12 +9,17 @@ orbs:
 
 jobs:
   test:
-    machine: true
+    executor:
+      name: node/default
+      tag: '13.14'
     steps:
       - checkout
       - run:
-         name: test app
+         name: install dependencies
          command: npm install
+      - run:
+         name: run tests
+         command: npm run test-ci
 
   build-docker:
     executor: docker/docker
