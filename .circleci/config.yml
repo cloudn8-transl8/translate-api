@@ -9,7 +9,6 @@ orbs:
 
 jobs:
   test:
-    machine: true
     steps:
       - node/install
       - checkout
