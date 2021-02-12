@@ -13,7 +13,7 @@ spec:
     name: api
   # the maximum time in seconds for the canary deployment
   # to make progress before it is rollback (default 600s)
-  progressDeadlineSeconds: 6000
+  progressDeadlineSeconds: 60
   service:
     # ClusterIP port number
     port: 3000
@@ -21,7 +21,7 @@ spec:
     # schedule interval (default 60s)
     interval: 30s
     # max number of failed metric checks before rollback
-    threshold: 500
+    threshold: 5
     # max traffic percentage routed to canary
     # percentage (0-100)
     maxWeight: 80
