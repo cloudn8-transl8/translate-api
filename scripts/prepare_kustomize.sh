@@ -4,7 +4,6 @@ cat <<EOF > ./k8sconfig/kustomization.yaml
 ---
 resources:
 - app.yaml
-- canary.yaml
 - dashboard.yaml
 - loadtest.yaml
 - service-router.yaml
