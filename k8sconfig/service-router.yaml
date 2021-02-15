@@ -15,5 +15,4 @@ spec:
   defaultSubset: api-primary
   subsets:
     api-primary:
-      filter: "Service.ID not contains \"api-primary\""
-      onlyPassing: true
+      filter: "Service.ID contains \"api\""
