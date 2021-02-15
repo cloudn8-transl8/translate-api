@@ -15,6 +15,7 @@ spec:
   defaultSubset: api-primary
   subsets:
     api-primary:
+
       filter: "Service.ID contains \"api-primary\""
       onlyPassing: true
     api-canary:
