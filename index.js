@@ -26,9 +26,9 @@ async function fetchLanguages () {
   return languages
 }
 
-async function setup () {
+async function setup() {
   // fetch the languages
-  const langs = fetchLanguages()
+  const langs = await fetchLanguages()
 
   const app = express()
   app.use(bodyParser.text())
