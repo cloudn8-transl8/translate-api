@@ -20,6 +20,3 @@ spec:
     api-canary:
       filter: "Service.ID not contains \"api-primary\""
       onlyPassing: true
-  failover:
-    api-canary:
-      serviceSubset: api-primary
