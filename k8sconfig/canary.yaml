@@ -1,0 +1,48 @@
+---
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: api
+  namespace: default
+spec:
+  provider: linkerd
+  # deployment reference
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: api
+  # the maximum time in seconds for the canary deployment
+  # to make progress before it is rollback (default 600s)
+  progressDeadlineSeconds: 60
+  service:
+    # ClusterIP port number
+    port: 3000
+  analysis:
+    # schedule interval (default 60s)
+    interval: 30s
+    # max number of failed metric checks before rollback
+    threshold: 5
+    # max traffic percentage routed to canary
+    # percentage (0-100)
+    maxWeight: 80
+    # canary increment step
+    # percentage (0-100)
+    stepWeight: 10
+    # Linkerd Prometheus checks
+    metrics:
+    - name: "consul-requests"
+      templateRef:
+        name: consul-requests
+        # namespace is optional
+        # when not specified, the canary namespace will be used
+        namespace: default
+      # minimum req success rate (non 5xx responses)
+      # percentage (0-100)
+      thresholdRange:
+        min: 99
+      interval: 1m
+    alerts:
+      - name: "Discord"
+        severity: info
+        providerRef:
+          name: on-call
