@@ -8,19 +8,6 @@ orbs:
   discord: antonioned/discord@0.1.0
 
 jobs:
-  test:
-    executor:
-      name: node/default
-      tag: '13.14'
-    steps:
-      - checkout
-      - run:
-         name: install dependencies
-         command: npm install
-      - run:
-         name: run tests
-         command: npm run test-ci
-
   build-docker:
     executor: docker/docker
     steps:
@@ -43,7 +30,7 @@ jobs:
   create-update-deployment:
     machine: true
     steps:
-      - checkout
+      - checkout 
       - gke/update-kubeconfig-with-credentials:
           cluster: prog-delivery
           install-kubectl: true
@@ -61,25 +48,28 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - test:
+      - node/test:
           context:
-          - transl8
+            - transl8
+          version: '13.14'
+
       - build-docker:
           context:
-          - transl8
+            - transl8
           requires:
-            - test
-      - confirm-deployment:
+            - node/test
+
+      - approve-for-deployment:
           type: approval
-          requires:
+          requires: 
             - build-docker
           filters:
             branches:
               only:
                 - main
+
       - create-update-deployment:
           context:
-          - transl8
+            - transl8
           requires:
-            - confirm-deployment
-
+            - approve-for-deployment
