@@ -8,19 +8,6 @@ orbs:
   discord: antonioned/discord@0.1.0
 
 jobs:
-  test:
-    executor:
-      name: node/default
-      tag: '13.14'
-    steps:
-      - checkout
-      - run:
-         name: install dependencies
-         command: npm install
-      - run:
-         name: run tests
-         command: npm run test-ci
-
   build-docker:
     executor: docker/docker
     steps:
@@ -61,9 +48,10 @@ jobs:
 workflows:
   build-and-deploy:
     jobs:
-      - test:
+      - node/test:
           context:
-          - transl8
+            - transl8
+          version: '13.14'
       - build-docker:
           context:
           - transl8
