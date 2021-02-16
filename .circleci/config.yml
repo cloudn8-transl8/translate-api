@@ -69,12 +69,17 @@ workflows:
           - transl8
           requires:
             - test
+      - confirm-deployment:
+        type: approval
+        requires:
+          - build-docker
+        filters:
+          branches:
+            only:
+              - main
       - create-update-deployment:
           context:
           - transl8
           requires:
-            - build-docker
-          filters:
-            branches:
-              only:
-                - main
+            - confirm-deployment
+
