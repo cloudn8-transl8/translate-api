@@ -30,7 +30,7 @@ jobs:
   create-update-deployment:
     machine: true
     steps:
-      - checkout
+      - checkout 
       - gke/update-kubeconfig-with-credentials:
           cluster: prog-delivery
           install-kubectl: true
@@ -52,17 +52,24 @@ workflows:
           context:
             - transl8
           version: '13.14'
+
       - build-docker:
           context:
-          - transl8
+            - transl8
           requires:
             - test
-      - create-update-deployment:
-          context:
-          - transl8
-          requires:
+
+      - approve-for-deployment:
+          type: approval
+          requires: 
             - build-docker
           filters:
             branches:
               only:
                 - main
+
+      - create-update-deployment:
+          context:
+            - transl8
+          requires:
+            - approve-for-deployment
