@@ -57,7 +57,7 @@ workflows:
           context:
             - transl8
           requires:
-            - test
+            - node/test
 
       - approve-for-deployment:
           type: approval
