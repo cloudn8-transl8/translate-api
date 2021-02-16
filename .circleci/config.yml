@@ -70,13 +70,13 @@ workflows:
           requires:
             - test
       - confirm-deployment:
-        type: approval
-        requires:
-          - build-docker
-        filters:
-          branches:
-            only:
-              - main
+          type: approval
+          requires:
+            - build-docker
+          filters:
+            branches:
+              only:
+                - main
       - create-update-deployment:
           context:
           - transl8
