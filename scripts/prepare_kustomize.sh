@@ -7,7 +7,7 @@ resources:
 - dashboard.yaml
 - canary.yaml
 - loadtest.yaml
-- service-router.yaml
+- service-resolver.yaml
 
 images:
 - name: nicholasjackson/translate-api
