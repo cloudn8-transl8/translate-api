@@ -1,7 +1,7 @@
 ---
 kind: ServiceSplitter
 metadata:
-  name: web
+  name: api
 spec:
     splits:
     - weight: 10

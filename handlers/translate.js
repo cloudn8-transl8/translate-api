@@ -1,5 +1,3 @@
-const emoji = require('node-emoji')
-
 const translate = function (langs, translateClient) {
   return wrapAsync(async (req, res, next) => {
     // The text to translate
@@ -24,46 +22,22 @@ const translate = function (langs, translateClient) {
       return
     }
 
-    // first translate into english so we can replace any words with emoji
-    let translation = await translateClient.translate(text, 'en')
+    try {
+      let translation = await translateClient.translate_text(text, target)
+      console.log(`translation from client: ${translation.text}`)
 
-    if (!translation || translation.length < 1) {
-      console.log('unable to translate text')
-      res.status(500).send('error translating text')
-      return
+      if(translation.cached) {
+        res.status(302).send(translation.text)
+      } else {
+        res.send(translation.text)
+      }
+    } catch(e) {
+      console.log(`error from translation client ${e}`)
+      res.status(500).send(e)
     }
-
-    console.log(`translation: ${translation[0]}`)
-    const emojiText = addEmojiToText(translation[0])
-
-    // now translate into the destination language
-    translation = await translateClient.translate(emojiText, target)
-    if (!translation || translation.length < 1) {
-      console.log('unable to translate text')
-      res.status(500).send('error translating text')
-      return
-    }
-
-    console.log(`translation: ${translation[0]}`)
-    res.send(translation[0])
   })
 }
 
-function addEmojiToText (text) {
-  const words = text.split(' ')
-  const returnString = []
-
-  words.forEach((w) => {
-    const e = emoji.find(w.toLowerCase())
-    if (e === undefined || e === null) {
-      returnString.push(w)
-    } else {
-      returnString.push(e.emoji)
-    }
-  })
-
-  return emoji.emojify(returnString.join(' '))
-}
 
 // wrapper for handler to ensure any uncaught errors are caught
 function wrapAsync (fn) {
