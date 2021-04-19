@@ -23,7 +23,7 @@ module.exports.mockLangs = [
 
 module.exports.mockTranslateClient = () => {
   const client = {}
-  client.translate = jest.fn()
+  client.translate_text = jest.fn()
 
   return client
 }
