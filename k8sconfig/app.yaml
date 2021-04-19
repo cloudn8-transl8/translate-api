@@ -34,16 +34,26 @@ spec:
         group: api
       annotations:
         "consul.hashicorp.com/connect-inject": "true"
-        "consul.hashicorp.com/service-tags": "v0.0.1"
+        "consul.hashicorp.com/service-tags": "v0.0.2"
     spec:
       containers:
       - name: api
-        image: nicholasjackson/translate-api:0.0.1
+        image: nicholasjackson/translate-api:0.0.2
         ports:
         - containerPort: 3000
         env:
         - name: GOOGLE_PROJECT
           value: consul-canary
+        - name: GOOGLE_REDISHOST
+          valueFrom:
+            secretKeyRef:
+              name: redis-host
+              key: hostname
+        - name: GOOGLE_REDISPORT
+          valueFrom:
+            secretKeyRef:
+              name: redis-host
+              key: port
         - name: ORIGIN
           value: http://web.translate.demo.gs
         - name: GOOGLE_APPLICATION_CREDENTIALS

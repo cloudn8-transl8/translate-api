@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const { healthHandler, translateHandler } = require('./handlers')
+const { TranslateClient } = require('./translate')
 
 const corsOptions = {
   origin: process.env.ORIGIN || 'http://localhost',
@@ -11,16 +12,14 @@ const corsOptions = {
 }
 
 const projectId = process.env.GOOGLE_PROJECT
+const redisHost = process.env.GOOGLE_REDISHOST || 'localhost';
+const redisPost = process.env.GOOGLE_REDISPOST || 6379;
 
-// Imports the Google Cloud client library
-const { Translate } = require('@google-cloud/translate').v2
-
-// Instantiates a client
-const translate = new Translate({ projectId })
+const translateClient = new TranslateClient(projectId, redisHost, redisPost)
 
 async function fetchLanguages () {
   // Lists available translation language with their names in English (the default).
-  const [languages] = await translate.getLanguages()
+  const [languages] = await translateClient.getLanguages()
   console.log('Loaded languages:', languages)
 
   return languages
@@ -30,9 +29,11 @@ async function setup() {
   // fetch the languages
   const langs = await fetchLanguages()
   const app = express()
+
+
   app.use(bodyParser.text())
 
-  app.post('/translate/:lang', cors(corsOptions), translateHandler(langs, translate))
+  app.post('/translate/:lang', cors(corsOptions), translateHandler(langs, translateClient))
 
   app.get('/health', healthHandler)
 
