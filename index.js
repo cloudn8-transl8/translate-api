@@ -18,7 +18,8 @@ const corsOptions = {
 }
 
 // fetch the languages
-const langs = fetchLanguages()
+const langs = translateClient.getLanguages()
+console.log('Loaded languages:', langs)
 
 const app = express()
 app.use(bodyParser.text())
