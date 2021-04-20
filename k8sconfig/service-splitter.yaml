@@ -1,0 +1,12 @@
+---
+kind: ServiceSplitter
+metadata:
+  name: api
+spec:
+    splits:
+    - weight: 10
+      service": api
+      serviceSubset: api-canary
+    - weight: 90
+      service": api
+      serviceSubset: api-primary

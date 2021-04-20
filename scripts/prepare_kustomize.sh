@@ -4,10 +4,10 @@ cat <<EOF > ./k8sconfig/kustomization.yaml
 ---
 resources:
 - app.yaml
-- canary.yaml
 - dashboard.yaml
+- canary.yaml
 - loadtest.yaml
-- service-router.yaml
+- service-resolver.yaml
 
 images:
 - name: nicholasjackson/translate-api
