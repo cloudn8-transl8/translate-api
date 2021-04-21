@@ -17,29 +17,39 @@ const corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
-// fetch the languages
-const langs = translateClient.getLanguages()
-console.log('Loaded languages:', langs)
+async function fetchLanguages() {
+  // fetch the languages
+  const langs = await translateClient.getLanguages()
+  console.log('Loaded languages:', langs)
 
-const app = express()
-app.use(bodyParser.text())
+  return langs
+}
 
-app.post('/translate/:lang', cors(corsOptions), translateHandler(langs, translateClient))
+async function setup() {
+  const langs = await fetchLanguages()
 
-app.get('/health', healthHandler)
+  const app = express()
+  app.use(bodyParser.text())
 
-app.get('/languages', cors(corsOptions), function (req, res) {
-  console.log('handle languages')
+  app.post('/translate/:lang', cors(corsOptions), translateHandler(langs, translateClient))
 
-  res.send(langs)
-})
+  app.get('/health', healthHandler)
 
-// error handling function
-app.use(function(error, req, res, next) {
-  // Will get here
-  res.status(500).json({ message: error.message })
-})
+  app.get('/languages', cors(corsOptions), function (req, res) {
+    console.log('handle languages')
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+    res.send(langs)
+  })
+
+  // error handling function
+  app.use(function(error, req, res, next) {
+    // Will get here
+    res.status(500).json({ message: error.message })
+  })
+
+  app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`)
+  })
+}
+
+setup()
