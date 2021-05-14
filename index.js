@@ -27,7 +27,7 @@ async function fetchLanguages () {
 
 async function setup() {
   // fetch the languages
-  const langs = await fetchLanguages()
+  //const langs = await fetchLanguages()
   const app = express()
 
 
